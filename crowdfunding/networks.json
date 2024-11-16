@@ -1,0 +1,8 @@
+{
+  "sepolia": {
+    "factory": {
+      "address": "0xA14b56CFa13B5E94778F2Cdf198345bAE706965B",
+      "startBlock": 7090325
+    }
+  }
+}

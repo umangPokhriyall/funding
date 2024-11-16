@@ -2,7 +2,7 @@
 pragma solidity ^0.8.13;
 
 import {Test} from "forge-std/Test.sol";
-import "../src/Factory.sol";
+import "../src/CrowdfundingFactory.sol";
 import "../src/Crowdfunding.sol";
 
 contract CrowdfundingFactoryTest is Test {
@@ -20,7 +20,7 @@ contract CrowdfundingFactoryTest is Test {
         uint256 target = 1 ether;
         uint256 deadline = block.timestamp + 7 days;
         uint256 withdrawalLimit = 0.1 ether;
-        string;
+        string[] memory milestones = new string[](2);
         milestones[0] = "Milestone 1";
         milestones[1] = "Milestone 2";
 

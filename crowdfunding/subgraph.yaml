@@ -1,0 +1,26 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: factory
+    network: sepolia
+    source:
+      address: "0xA14b56CFa13B5E94778F2Cdf198345bAE706965B"
+      abi: factory
+      startBlock: 7090325
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - CampaignCreated
+      abis:
+        - name: factory
+          file: ./abis/factory.json
+      eventHandlers:
+        - event: CampaignCreated(indexed address,indexed address,string,string,uint256,uint256)
+          handler: handleCampaignCreated
+      file: ./src/factory.ts
