@@ -5,12 +5,12 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum
-    name: factory
+    name: CrowdfundingFactory
     network: sepolia
     source:
       address: "0xA14b56CFa13B5E94778F2Cdf198345bAE706965B"
-      abi: factory
-      startBlock: 7090325
+      abi: CrowdfundingFactory
+      startBlock: 07090325
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -18,9 +18,9 @@ dataSources:
       entities:
         - CampaignCreated
       abis:
-        - name: factory
-          file: ./abis/factory.json
+        - name: CrowdfundingFactory
+          file: ./abis/CrowdfundingFactory.json
       eventHandlers:
         - event: CampaignCreated(indexed address,indexed address,string,string,uint256,uint256)
           handler: handleCampaignCreated
-      file: ./src/factory.ts
+      file: ./src/crowdfunding-factory.ts

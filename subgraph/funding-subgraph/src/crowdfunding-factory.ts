@@ -1,4 +1,4 @@
-import { CampaignCreated as CampaignCreatedEvent } from "../generated/factory/factory"
+import { CampaignCreated as CampaignCreatedEvent } from "../generated/CrowdfundingFactory/CrowdfundingFactory"
 import { CampaignCreated } from "../generated/schema"
 
 export function handleCampaignCreated(event: CampaignCreatedEvent): void {

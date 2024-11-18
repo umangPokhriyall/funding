@@ -1,6 +1,6 @@
 import { newMockEvent } from "matchstick-as"
 import { ethereum, Address, BigInt } from "@graphprotocol/graph-ts"
-import { CampaignCreated } from "../generated/factory/factory"
+import { CampaignCreated } from "../generated/CrowdfundingFactory/CrowdfundingFactory"
 
 export function createCampaignCreatedEvent(
   fundraiser: Address,
