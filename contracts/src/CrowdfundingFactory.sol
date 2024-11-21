@@ -2,8 +2,14 @@
 pragma solidity ^0.8.13;
 
 import "./Crowdfunding.sol";
+import "./CloneFactory.sol";
 
-contract CrowdfundingFactory {
+contract CrowdfundingFactory is CloneFactory {
+    address public implementation;
+
+    address[] public campaigns;
+    mapping(address => address[]) public campaignsByFundraiser;
+
     event CampaignCreated(
         address indexed fundraiser,
         address indexed campaignAddress,
@@ -13,7 +19,10 @@ contract CrowdfundingFactory {
         uint256 deadline
     );
 
-    // Function to create a new Crowdfunding campaign
+    constructor(address _implementation) {
+        implementation = _implementation;
+    }
+
     function createCampaign(
         string memory _name,
         string memory _description,
@@ -22,20 +31,23 @@ contract CrowdfundingFactory {
         uint256 _withdrawalLimit,
         string[] memory milestoneDescriptions
     ) external {
-        require(_target > 0, "Target amount must be greater than zero");
+        require(_target > 0, "Target must be greater than zero");
         require(_deadline > block.timestamp, "Deadline must be in the future");
 
-        // Deploy a new Crowdfunding contract
-        Crowdfunding newCampaign = new Crowdfunding(
+        Crowdfunding newCampaign = Crowdfunding(createClone(implementation));
+        newCampaign.initialize(
             _name,
             _description,
             _target,
             _deadline,
             _withdrawalLimit,
-            milestoneDescriptions
+            milestoneDescriptions,
+            msg.sender
         );
 
-        // Emit event to log the campaign creation
+        campaigns.push(address(newCampaign));
+        campaignsByFundraiser[msg.sender].push(address(newCampaign));
+
         emit CampaignCreated(
             msg.sender,
             address(newCampaign),
@@ -44,5 +56,15 @@ contract CrowdfundingFactory {
             _target,
             _deadline
         );
+    }
+
+    function getAllCampaigns() external view returns (address[] memory) {
+        return campaigns;
+    }
+
+    function getCampaignsByFundraiser(
+        address _fundraiser
+    ) external view returns (address[] memory) {
+        return campaignsByFundraiser[_fundraiser];
     }
 }
