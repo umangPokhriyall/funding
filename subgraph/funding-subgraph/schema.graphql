@@ -1,3 +1,4 @@
+# Existing CampaignCreated entity
 type CampaignCreated @entity(immutable: true) {
   id: Bytes!
   fundraiser: Bytes! # address
@@ -6,6 +7,29 @@ type CampaignCreated @entity(immutable: true) {
   description: String! # string
   target: BigInt! # uint256
   deadline: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+# New Contribution entity (for the ContributionMade event)
+type Contribution @entity(immutable: true) {
+  id: Bytes! # Unique ID for the contribution
+  contributor: Bytes! # Address of the contributor
+  amount: BigInt! # Amount contributed
+  campaignAddress: Bytes! # Address of the campaign
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+# New Milestone entity (for the MilestoneCreated event)
+type Milestone @entity(immutable: true) {
+  id: Bytes! # Unique ID for the milestone
+  milestoneId: BigInt! # ID of the milestone
+  campaignAddress: Bytes! # Address of the campaign
+  amount: BigInt! # Amount for this milestone
+  reached: Boolean! # Whether the milestone has been reached
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!

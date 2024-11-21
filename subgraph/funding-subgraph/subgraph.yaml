@@ -10,7 +10,7 @@ dataSources:
     source:
       address: "0xA14b56CFa13B5E94778F2Cdf198345bAE706965B"
       abi: CrowdfundingFactory
-      startBlock: 07090325
+      startBlock: 7090325
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -24,3 +24,25 @@ dataSources:
         - event: CampaignCreated(indexed address,indexed address,string,string,uint256,uint256)
           handler: handleCampaignCreated
       file: ./src/crowdfunding-factory.ts
+  # Add this template for the Crowdfunding contract
+  - kind: ethereum/contract
+    name: Crowdfunding
+    network: sepolia
+    source: # leave this empty for now
+      abi: Crowdfunding
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Contribution
+        - Milestone
+      abis:
+        - name: Crowdfunding
+          file: ./abis/Crowdfunding.json
+      eventHandlers:
+        - event: ContributionMade(indexed address, uint256)
+          handler: handleContributionMade
+        - event: MilestoneCreated(uint256, address, uint256, bool)
+          handler: handleMilestoneCreated
+      file: ./src/crowdfundingMapping.ts
