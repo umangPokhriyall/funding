@@ -5,22 +5,40 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum
-    name: CrowdfundingFactory
+    name: Crowdfunding
     network: sepolia
     source:
-      address: "0x1523023FbFBbdA3671Bda2F52eE65CfC3893E80c"
-      abi: CrowdfundingFactory
+      address: "0x7FF1Ae505aCaeA4cb3F146FcecA77280BAAB992B"
+      abi: Crowdfunding
       startBlock: 7122294
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
-        - CampaignCreated
+        - CampaignEnded
+        - ContributionMade
+        - FundsReleased
+        - FundsRequested
+        - Initialized
+        - RefundIssued
+        - VoteCasted
       abis:
-        - name: CrowdfundingFactory
-          file: ./abis/CrowdfundingFactory.json
+        - name: Crowdfunding
+          file: ./abis/Crowdfunding.json
       eventHandlers:
-        - event: CampaignCreated(indexed address,indexed address,string,string,uint256,uint256)
-          handler: handleCampaignCreated
-      file: ./src/crowdfunding-factory.ts
+        - event: CampaignEnded(bool)
+          handler: handleCampaignEnded
+        - event: ContributionMade(indexed address,uint256)
+          handler: handleContributionMade
+        - event: FundsReleased(uint256,uint256)
+          handler: handleFundsReleased
+        - event: FundsRequested(uint256)
+          handler: handleFundsRequested
+        - event: Initialized(uint64)
+          handler: handleInitialized
+        - event: RefundIssued(indexed address,uint256)
+          handler: handleRefundIssued
+        - event: VoteCasted(indexed address,uint256,uint256)
+          handler: handleVoteCasted
+      file: ./src/crowdfunding.ts
