@@ -3,9 +3,9 @@
 import React, { useState } from 'react';
 import { useWriteContract } from 'wagmi'
 import { ethers } from 'ethers';
-import abi from '@/ABI.json';
+import abi from '@/abis/CrowdfundingFactory.json';
 
-const factoryAddress = '0xA14b56CFa13B5E94778F2Cdf198345bAE706965B'; // Replace with your contract address
+const factoryAddress = '0x252Fa0D2d0C389d635EE09F2C2fB46FB5A664CB9'; // Replace with your contract address
 
 const CreateCampaign: React.FC = () => {
   const [name, setName] = useState('');
